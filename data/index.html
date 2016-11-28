@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript" src="api.js"></script>
+  </head>
+  <body>
+    <h3>1. Open devtools console</h3>
+    <hr />
+    <h3>2. Try promises</h3>
+    execute following code in console:
+    <pre>
+API.getUsers()
+  .then(function(data){
+    console.log(data);
+  })
+    </pre>
+    <hr />
+    <h3>3. Use API</h3>
+    <ul>
+      <li><code>API.getNationalities() : <i>thenable</i></code></li>
+      <li><code>API.getUser(id) : <i>thenable</i></code></li>
+      <li><code>API.getUsers() : <i>thenable</i></code></li>
+      <li><code>API.getUsersByNationality(nationality) : <i>thenable</i></code></li>
+    </ul>
+  </body>
+</html>
