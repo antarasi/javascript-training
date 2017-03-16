@@ -10,10 +10,14 @@ describe('Functional programming', function(){
 
 		// code should look like: collection.map(fn)
 
-		var multiplyBy3;
-		var multiplyBy5;
-		var list3times3;
-		var list5times5;
+		function multiplyBy3(el){
+			return el * 3;
+		}
+		function multiplyBy5(el){
+			return el * 5;
+		}
+		var list3times3 = list3.map(multiplyBy3);
+		var list5times5 = list5.map(multiplyBy5);
 
 		expect(typeof multiplyBy3).toEqual("function");
 		expect(multiplyBy3.length).toEqual(1);
@@ -34,11 +38,21 @@ describe('Functional programming', function(){
 
 		// code should look like: collection.map(fn).filter(fn)
 
-		var multiplyBy3; // reuse
-		var multiplyBy5; // reuse
-		var isEven;
-		var list3times3filteredEven;
-		var list5times5filteredEven;
+		function multiplyBy3(el){
+			return el * 3;
+		}
+		function multiplyBy5(el){
+			return el * 5;
+		}
+		function isEven(el){
+			return el % 2 == 0;
+		}
+		var list3times3filteredEven = list3
+			.map(multiplyBy3)
+			.filter(isEven);
+		var list5times5filteredEven = list5
+			.map(multiplyBy5)
+			.filter(isEven);
 
 		expect(typeof isEven).toEqual("function");
 		expect(isEven.length).toEqual(1);
@@ -56,12 +70,26 @@ describe('Functional programming', function(){
 
 		// code should look like: collection.map(fn).filter(fn).reduce(fn)
 
-		var multiplyBy3; // reuse
-		var multiplyBy5; // reuse
-		var isEven; // reuse
-		var sum;
-		var list3times3filteredEvenSum;
-		var list5times5filteredEvenSum;
+		function multiplyBy3(el){
+			return el * 3;
+		}
+		function multiplyBy5(el){
+			return el * 5;
+		}
+		function isEven(el){
+			return el % 2 == 0;
+		}
+		function sum(aggr, el){
+			return aggr + el;
+		}
+		var list3times3filteredEvenSum = list3
+			.map(multiplyBy3)
+			.filter(isEven)
+			.reduce(sum);
+		var list5times5filteredEvenSum = list5
+			.map(multiplyBy5)
+			.filter(isEven)
+			.reduce(sum);
 
 		expect(typeof sum).toEqual("function");
 		expect(sum.length).toEqual(2);
@@ -77,8 +105,11 @@ describe('Functional programming', function(){
 		// and returns the value processed by piping via function sequence
 
 		// don't use FOR loops, use functional programming
-
-		// function execute...
+		function execute(fnSequence, init){
+			return fnSequence.reduce(function(value, fn){
+				return fn(value);
+			}, init);
+		}
 
 		var start = 2;
 		var operations = [

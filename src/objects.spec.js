@@ -16,13 +16,13 @@ describe('Object', function(){
 			var paul = new Person("Paul", "McCartney");
 			var john = new Person("John", "Lennon", 40);
 
-			expect(paul.age).toEqual( /* YOUR ANSWER HERE */ );
-			expect(john.age).toEqual( /* YOUR ANSWER HERE */ );
+			expect(paul.age).toEqual(18);
+			expect(john.age).toEqual(40);
 
 			Person.prototype.age = 23;
 
-			expect(paul.age).toEqual( /* YOUR ANSWER HERE */ );
-			expect(john.age).toEqual( /* YOUR ANSWER HERE */ );
+			expect(paul.age).toEqual(23);
+			expect(john.age).toEqual(40);
 		});
 	});
 
@@ -38,7 +38,7 @@ describe('Object', function(){
             // which recreates top-level of a data structure
 
 			function shallowClone(data){
-				//...
+				return data.map(function(e){ return e; });
 			}
 
 			var users = db.getUsers();
@@ -55,7 +55,7 @@ describe('Object', function(){
             // which recreates all (top and each nested) levels of a data structure
 
 			function deepClone(data){
-				//...
+				return JSON.parse(JSON.stringify(data));
 			}
 
 			var users = db.getUsers();

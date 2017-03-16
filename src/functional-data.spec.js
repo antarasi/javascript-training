@@ -11,8 +11,13 @@ describe('Processing data', function(){
 			var users = db.getUsers();
 
 			// use FOR loops
-			var totalBonus;
-			// for(...; ...; ...)
+			var totalBonus = 0;
+			for (var i = 0; i < users.length; i++){
+				var user = users[i];
+				if (user.nationality === 'DE' && user.salary < 5000){
+					totalBonus += user.salary * 0.2;
+				}
+			}
 
 			expect(totalBonus).toEqual(13246);
 		});
@@ -29,9 +34,20 @@ describe('Processing data', function(){
 			var users = db.getUsers();
 
 			// use functional programming, assign step by step
-			var usersDE; // = users.doSomething(...)
-			var usersWithSalaryLessThan5000; // = usersDE.doSomething(...)
-			var totalBonus; // = usersWithSalaryLessThan5000.doSomething(...)
+			var usersDE = users
+				.filter(function(user){
+					return user.nationality === 'DE';
+				});
+			var usersWithSalaryLessThan5000 = usersDE
+				.filter(function(user){
+					return user.salary < 5000;
+				});
+			var totalBonus = usersWithSalaryLessThan5000
+				.map(function(user){
+					return user.salary * 0.2;
+				}).reduce(function(aggr, bonus){
+					return aggr + bonus;
+				}, 0);
 
 			expect(usersDE.length).toEqual(39);
 			expect(usersWithSalaryLessThan5000.length).toEqual(18);
@@ -44,11 +60,16 @@ describe('Processing data', function(){
 			var users = db.getUsers();
 
 			// use functional programming
-			var totalBonus;
-			// = users
-			// .filter(...)
-			// .map(...)
-			// .reduce(...)
+			var totalBonus = users
+				.filter(function(user){
+					return user.nationality === 'DE';
+				}).filter(function(user){
+					return user.salary < 5000;
+				}).map(function(user){
+					return user.salary * 0.2;
+				}).reduce(function(aggr, bonus){
+					return aggr + bonus;
+				}, 0);
 
 			expect(totalBonus).toEqual(13246);
 		});

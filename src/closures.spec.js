@@ -7,7 +7,10 @@ describe('Closures', function(){
 		// the value itself is not directly accessible from the outside
 
 		function incrementer(){
-			//...
+			var x = 0;
+			return function(){
+				return ++x;
+			}
 		}
 
 		var inc1 = incrementer();
@@ -30,7 +33,15 @@ describe('Closures', function(){
 		// the value itself is not directly accessible from the outside
 
 		function counter(){
-			//...
+			var x = 0;
+			return {
+				inc: function(){
+					return ++x;
+				},
+				dec: function(){
+					return --x;
+				}
+			}
 		}
 
 		var c1 = counter();
@@ -52,7 +63,24 @@ describe('Closures', function(){
 		// `getBalance` method subtracts all outcomes from all incomes
 
 		function finanseStorage(){
-			//...
+			var incomes = [];
+			var outcomes = [];
+			var sum = function(numbers){
+				return numbers.reduce(function(a, b){
+					return a + b;
+				}, 0);
+			}
+			return {
+				saveIncome: function(income){
+					incomes.push(income);
+				},
+				saveOutcome: function(outcome){
+					outcomes.push(outcome);
+				},
+				getBalance: function(){
+					return parseFloat((sum(incomes) - sum(outcomes)).toFixed(2));
+				}
+			}
 		}
 
 		var f1 = finanseStorage();

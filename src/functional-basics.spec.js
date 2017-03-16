@@ -6,28 +6,39 @@ describe('Functional programming Basics', function(){
 
 	it('makes it easy to filter data by condition', function(){
 		// fetch the user with ID 9451
-		var user9451;
+		var user9451 = users.find(function(user){
+			return user.id === 9451;
+		});
 
 		expect(user9451.id).toEqual(9451);
 		expect(user9451.address.city).toEqual("Port Bentonshireland");
 		expect(user9451.phone).toEqual("1-139-794-6794");
 
 		// fetch a user with nationality US
-		var USUser;
+		var USUser = users.find(function(user){
+			return user.nationality === "US";
+		});
 
 		expect(USUser.nationality).toEqual("US");
 	});
 
 	it('makes it easy to filter data by condition', function(){
 		// fetch all users with nationality DE only
-		var DEUsers;
+		var DEUsers = users.filter(function(user){
+			return user.nationality === 'DE';
+		})
 
 		expect(DEUsers.length).toEqual(39);
 		expect(DEUsers[19].name).toEqual("Nicholas Rogahn");
 		expect(DEUsers[38].name).toEqual("Pat Abshire");
 
 		// fetch all users with gmail.com email domain only
-		var GmailUsers;
+		function check(email, domain){
+			return email.substr(email.length - domain.length, email.length) === domain;
+		}
+		var GmailUsers = users.filter(function(user){
+			return check(user.email, "gmail.com");
+		})
 
 		expect(GmailUsers.length).toEqual(40);
 		expect(GmailUsers[19].name).toEqual("Kallie Quigley");
@@ -36,7 +47,11 @@ describe('Functional programming Basics', function(){
 
 	it('makes it easy to sort data by condition', function(){
 		// sort users by descending salary
-		var RichestUsers;
+		var RichestUsers = users
+			.slice()
+			.sort(function(a, b){
+				return b.salary - a.salary;
+			});
 
 		expect(RichestUsers.length).toEqual(118);
 		expect(RichestUsers[0].salary).toEqual(9922);
@@ -45,7 +60,11 @@ describe('Functional programming Basics', function(){
 		expect(RichestUsers[116].salary).toEqual(1388);
 
 		// sort users by ascending salary
-		var PoorestUsers;
+		var PoorestUsers = users
+			.slice()
+			.sort(function(a, b){
+				return a.salary - b.salary;
+			});
 
 		expect(PoorestUsers.length).toEqual(118);
 		expect(PoorestUsers[0].salary).toEqual(1292);
@@ -56,7 +75,10 @@ describe('Functional programming Basics', function(){
 
 	it('makes it easy to modify entire collections', function(){
 		// grab all telephone numbers of all users without modifying the order
-		var UserPhoneNumbers;
+		var UserPhoneNumbers = users
+			.map(function(user){
+				return user.phone;
+			});
 
 		expect(UserPhoneNumbers.length).toEqual(118);
 		expect(UserPhoneNumbers[8]).toEqual("1-415-304-0824");
@@ -69,7 +91,13 @@ describe('Functional programming Basics', function(){
 		// fetch the phone to the richest user who is American
 		// or (gives the same result in this case)
 		// fetch the phone to the richest American
-		var maxSalary;
+		var maxSalary = Math.max.apply(null, users.map(function(user){
+			return user.salary;
+		}));
+		var RichestUSUserPhone = users
+			.find(function(user){
+				return user.salary === maxSalary && user.nationality === "US";
+			}).phone;
 
 		expect(RichestUSUserPhone).toEqual("1-941-502-1947 x609");
 	});

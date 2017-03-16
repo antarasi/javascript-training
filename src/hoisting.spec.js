@@ -17,7 +17,7 @@ describe('Hoisting', function(){
 		var c = 3;
 		log(a, b, c);
 
-		expect(logMemory).toEqual([ /* YOUR ANSWER HERE */ ]);
+		expect(logMemory).toEqual([ undefined, undefined, undefined, 1, undefined, 3 ]);
 	});
 
 	it('should create variables per function memory frame', function(){
@@ -29,7 +29,7 @@ describe('Hoisting', function(){
 		}());
 		log(a);
 
-		expect(logMemory).toEqual([ /* YOUR ANSWER HERE */ ]);
+		expect(logMemory).toEqual([ undefined, 1, undefined ]);
 	});
 
 	describe('advanced usage', function(){
@@ -46,7 +46,7 @@ describe('Hoisting', function(){
 			}
 			log(foo());
 
-			expect(logMemory).toEqual([ /* YOUR ANSWER HERE */ ]);
+			expect(logMemory).toEqual([8]);
 		});
 
 		it('last already executed function expression is available', function(){
@@ -61,7 +61,7 @@ describe('Hoisting', function(){
 			}
 			log(foo());
 
-			expect(logMemory).toEqual([ /* YOUR ANSWER HERE */ ]);
+			expect(logMemory).toEqual([3]);
 		});
 
 		it('last already executed function expression is available, executed with hoisting', function(){
@@ -76,7 +76,7 @@ describe('Hoisting', function(){
 				};
 			}
 
-			expect(logMemory).toEqual([ /* YOUR ANSWER HERE */ ]);
+			expect(logMemory).toEqual([3]);
 		});
 
 		it('executing not initialized yet function will throw', function(){
@@ -90,7 +90,7 @@ describe('Hoisting', function(){
 				};
 			}
     
-			expect(foo).toEqual([ /* YOUR ANSWER HERE */ ]);
+			expect(foo).toThrow();
 		});
 	});
 });

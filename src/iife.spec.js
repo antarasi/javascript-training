@@ -5,16 +5,16 @@ describe('Immediately Invoked Function Expressions', function(){
 		// wrap the code below with an IIFE not to make those variables leak to the global scope
 		// and assign its return value to `result` variable
 
-		var result;
+		var result = (function(){
+			var firstName = "John";
+			var lastName = "Lennon";
+			var john = {
+				first: firstName,
+				last: lastName
+			};
 
-		// DON'T REMOVE FOLLOWING CODE // START
-		var firstName = "John";
-		var lastName = "Lennon";
-		var john = {
-			first: firstName,
-			last: lastName
-		};
-		// DON'T REMOVE FOLLOWING CODE // END
+			return john;
+		}());
 
 		expect(result.first).toEqual('John');
 		expect(result.last).toEqual('Lennon');
@@ -46,9 +46,11 @@ describe('Immediately Invoked Function Expressions', function(){
 
 		var list = [];
 		for(var k = 0; k < 25; k += 2){
-			list.push(function(){
-				return [k, k*k];
-			});
+			(function(k){
+				list.push(function(){
+					return [k, k*k];
+				});
+			}(k))
 		}
 
 		var result = list.map(function(fn){
